@@ -745,10 +745,10 @@ class TestUnicode(BaseTest):
 
     def test_literal_count(self):
         def pyfunc(x):
-            return 'abc'.count(x), x.count('a')
+            return 'abc'.count(x), x.count('aa')
 
         cfunc = njit(pyfunc)
-        for a in ['ab', 'abc', 'abcd', '', 'c', 'abc' * 50]:
+        for a in ['ab', 'abc', 'abcd', '', 'c', 'abc' * 50, 'aaaaaabcd']:
             args = [a]
             self.assertEqual(pyfunc(*args), cfunc(*args),
                              msg='failed on {}'.format(args))

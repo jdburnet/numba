@@ -377,11 +377,18 @@ def _find(substr, s):
 
 @njit(_nrt=False)
 def _count(substr, s):
-    # Naive, slow string matching for now
     count = 0
-    for i in range(len(s) - len(substr) + 1):
+    i = 0
+    incr = len(substr)
+    if not incr:
+        incr = 1
+    # Naive, slow string matching for now
+    while i < len(s) - len(substr) + 1:
         if _cmp_region(s, i, substr, 0, len(substr)) == 0:
             count += 1
+            i += incr
+        else:
+            i += 1
     return count
 
 
